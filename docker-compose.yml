@@ -1,0 +1,59 @@
+version: '3'
+
+services: 
+    consulserver01:   
+        image: consul:1.10
+        container_name: consulserver01
+        hostname: consulserver01
+        command: "consul agent -config-dir=/etc/consul.d"
+        volumes: 
+            - ./servers/server01:/etc/consul.d
+        ports:
+            - "8500:8500"
+        networks:
+            - consul-demo
+
+    consulserver02:   
+        image: consul:1.10
+        container_name: consulserver02
+        hostname: consulserver02
+        command: "consul agent -config-dir=/etc/consul.d"
+        volumes: 
+            - ./servers/server02:/etc/consul.d
+        networks:
+            - consul-demo
+
+    consulserver03:   
+        image: consul:1.10
+        container_name: consulserver03
+        hostname: consulserver03
+        command: "consul agent -config-dir=/etc/consul.d"
+        volumes: 
+            - ./servers/server03:/etc/consul.d
+        networks:
+            - consul-demo
+    
+    consulclient01:   
+        image: consul:1.10
+        container_name: consulclient01
+        hostname: consulclient01
+        #command: "agent -retry-join consulserver01 -client 0.0.0.0 -config-dir=/etc/consul.d"
+        command: "consul agent -join consulserver01 -config-dir=/etc/consul.d"
+        volumes: 
+            - ./clients/consul01:/etc/consul.d
+        networks:
+            - consul-demo
+
+    consulclient02:   
+        image: consul:1.10
+        container_name: consulclient02
+        hostname: consulclient02
+        #command: "agent -retry-join consulserver01 -client 0.0.0.0 -config-dir=/etc/consul.d"
+        command: "consul agent -join consulserver01 -config-dir=/etc/consul.d"
+        volumes: 
+            - ./clients/consul02:/etc/consul.d
+        networks:
+            - consul-demo
+
+networks:
+  consul-demo:

@@ -1,0 +1,7 @@
+{
+    "server":true,
+    "data_dir":"/tmp",
+    "retry_join":["consulserver01"],
+    "node_name":"consulserver03",
+    "encrypt":"4qi0x6r7rnCVG3dI9rRplCBuPiN1ETDfQkNQXbO7A/A="
+}
